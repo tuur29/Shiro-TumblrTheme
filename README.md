@@ -17,6 +17,4 @@ There is a small selection of widgets that can be enabled: a search bar, likes w
 * Even menu items will be displayed in the lefthand side of the menu card, whilst odd menu items will be displayed in the righthand side. The ask and sumbit links have their own place at the bottom of the menu card.
 
 >TODO:
-- test following & likes widget
 - finish localization (top, query, submit, ask)
-- upload assets to static
