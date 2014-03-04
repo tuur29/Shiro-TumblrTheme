@@ -1,0 +1,471 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{Title}{block:PostTitle} - {PostTitle}{/block:PostTitle}</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+	<link rel="shortcut icon" type="image/x-icon" href="{Favicon}" />
+    <link rel="alternate" type="application/rss+xml" href="{RSS}" />
+	<link rel="stylesheet" type="text/css" href="shiro.css" />
+    
+	{block:Description}
+        <meta name="description" content="{MetaDescription}" />
+    {/block:Description}
+    
+    <meta name="color:Background" content="#efefef" />
+    <meta name="color:Content Background" content="#f8f8f8" />
+    <meta name="color:Border" content="#ccc" />
+    <meta name="color:Bar" content="#efefef" />
+    <meta name="color:Text" content="#222" />
+    <meta name="color:Tags" content="#777" />
+    
+    <meta name="text:Width" content="300" />
+    <meta name="image:Background Image" content="" />
+    <meta name="if:Background Repeat" content="1" />
+    <meta name="if:Fixed Background" content="0" />
+    <meta name="if:Left Sidebar" content="0" />
+    
+    <meta name="if:Show Menu Card" content="1" />
+    <meta name="if:Description Widget" content="1" />
+    <meta name="if:Search Widget" content="1" />
+    <meta name="if:Followers Widget" content="0" />
+    <meta name="if:Likes Widget" content="0" />
+    <meta name="if:Following Widget" content="0" />
+    <meta name="if:Twitter Widget" content="0" />
+    <meta name="if:Show Widget Headers" content="1" />
+    <meta name="if:Hide Widgets On Mobile" content="1" />
+    <meta name="if:Infinite Scrolling" content="1" />
+    
+    <meta name="if:Media Width 250" content="1" />
+    <meta name="if:Media Width 400" content="0" />
+    <meta name="if:Media Width 500" content="0" />
+    <meta name="if:Media Width 700" content="0" />
+    
+	<meta name="robots" content="NOODP" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style>
+        body {
+            background: url('{image:Background Image}') {color:Background};
+            color: {color:Text};
+			{block:IfBackgroundRepeat}
+                background-repeat: repeat;
+            {/block:IfBackgroundRepeat}
+			{block:IfNotBackgroundRepeat}
+                background-repeat: no-repeat;
+            {/block:IfNotBackgroundRepeat}
+			{block:IfFixedBackground}
+                background-attachment: fixed;
+            {/block:IfFixedBackground}
+        }
+		{block:IfLeftSidebar}
+			#bar { left: 0; }
+			#widgets {
+				text-align: left;
+				left: 20px;
+			}
+			body { text-align: right; }
+			body > .card {
+				display: inline-block;
+				margin: 70px 45px -20px 0;
+			}
+			#content { left: 25%; text-align: left; }
+			#arrow { right: 0; }
+		{/block:IfLeftSidebar}
+		{block:IfNotLeftSidebar}
+			#bar { right: 0; }
+			#widgets {
+				text-align: right;
+				right: 20px;
+			}
+			body > .card {
+				margin: 70px 0 -20px 70px;
+			}
+			#arrow { left: 0; }
+		{/block:IfNotLeftSidebar}
+		#arrow a { color: {color:Tags}; }
+        a, a:link, a:visited, a:hover {color: {color:Text};}
+        .card, #widgets > div, #header {
+            border: 1px solid {color:Border};
+            background: {color:Content Background};
+            box-shadow: 0 0 10px {color:Border};
+        }
+        .card { width: {text:Width}px; }
+        .card .meta {
+            background: {color:Bar};
+            border-top: 1px solid {color:Border};
+        }
+        .card .tags a { color: {color:Tags}; }
+        .card img:not(.avatar) { border-bottom: 1px solid {color:Border}; }
+		#tweets p { border-top: 1px solid {color:Border}; }
+        @media (max-width: 992px) {
+			body > .card {
+				display: block;
+				margin: 70px 0 0 45px;
+			}
+            #bar {
+                background: {color:Content Background};
+                box-shadow: inset 0 -15px 15px -15px {color:Border};
+            }
+			#content { left: 0; }
+            {block:IfHideWidgetsOnMobile}
+                {block:SearchPage} #widgets { display: none; } #copyright { display: block; } {/block:SearchPage}
+                {block:TagPage} #widgets { display: none; } #copyright { display: block; } {/block:TagPage}
+                {block:DayPage} #widgets { display: none; } #copyright { display: block; } {/block:DayPage}
+                {block:PermalinkPage} #widgets { display: none; } #copyright { display: block; } {/block:PermalinkPage}
+            {/block:IfHideWidgetsOnMobile}
+        }
+		@media (max-width: 720px) {
+			.card { width: auto; }
+		}
+        
+        {CustomCSS}
+    </style>
+    <script>
+        {block:IfMediaWidth250}var size=250;{/block:IfMediaWidth250}
+        {block:IfMediaWidth400}var size=400;{/block:IfMediaWidth400}
+        {block:IfMediaWidth500}var size=500;{/block:IfMediaWidth500}
+        {block:IfMediaWidth700}var size=700;{/block:IfMediaWidth700}
+        
+        var margin=Math.floor(({text:Width}-size)/2);
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".photoset { margin: "+margin+"px 0 0 "+margin+"px }";
+        document.head.appendChild(css);
+    </script>
+    
+</head>
+<body>
+    <div id="top"></div>
+    
+    <div id="bar">
+		
+		{block:IfShowMenuCard}
+			<div id="header" class="card">
+				<h1><a href="{BlogURL}" title="{lang:Home}">{Title}</a></h1>
+
+				{block:HasPages}
+					{block:Pages}
+						<p><a href="{URL}" {Target} title="{Label}">{Label}</a></p>
+					{/block:Pages}
+				{/block:HasPages}
+
+				<div class="spacer"></div>
+				<div class="meta">
+					{block:SubmissionsEnabled}
+						<a href="/submit" {Target} title="Submit">{SubmitLabel}</a>
+					{/block:SubmissionsEnabled}
+					{block:AskEnabled}
+						<a href="/ask" {Target} title="Ask">{AskLabel}</a>
+					{/block:AskEnabled}
+				</div>
+
+			</div>
+			<div class="spacer"></div>
+		{/block:IfShowMenuCard}
+		
+        <div id="widgets">
+            {block:IfSearchWidget}
+                <div id="search">
+                    <form action="/search" method="GET">
+                        <input type="text" name="q" placeholder="Query..." />
+                        <input type="submit" value="{lang:Search}" />
+                    </form>
+                </div>
+            {/block:IfSearchWidget}
+            
+            {block:IfLikesWidget}
+                {block:Likes}
+                    <div id="likes">
+						{block:IfShowWidgetHeaders}<h3>{lang:Liked posts}</h3>{/block:IfShowWidgetHeaders}
+                        {Likes summarize="50" width="200" limit="10"}
+                    </div>
+                {/block:Likes}
+            {/block:IfLikesWidget}
+            
+            {block:IfFollowingWidget}
+                {block:Following}
+                    <div id="follow">
+						{block:IfShowWidgetHeaders}<h3>{lang:Following}</h3>{/block:IfShowWidgetHeaders}
+                        {block:Followed}<a href="{FollowedURL}" {Target} title="{FollowedName}"><img alt="{FollowedName}" src="{FollowedPortraitURL-30}" /></a>{/block:Followed}
+                    </div>
+                {/block:Following}
+            {/block:IfFollowingWidget}
+            
+			{block:IfTwitterWidget}
+                {block:Twitter}
+                    <div id="twitter">
+						{block:IfShowWidgetHeaders}<h3>Twitter (<a href="http://twitter.com/{TwitterUsername}" {Target}>{TwitterUsername}) </a></h3>{/block:IfShowWidgetHeaders}
+                        <div id="tweets"></div>
+						<script type="text/javascript">
+							function recent_tweets(data) {
+								for (i=0; i<data.length; i++) {
+									document.getElementById("tweets").innerHTML = document.getElementById("tweets").innerHTML + '<p><a href="http://twitter.com/{TwitterUsername}/status/' + (data[i].id_str ? data[i].id_str : data[i].id) + '" {Target}>' + data[i].text + '</a></p>';
+								}
+							}
+						</script>
+                    </div>
+                {/block:Twitter}
+            {/block:IfTwitterWidget}
+			
+            {block:IfDescriptionWidget}
+				{block:Description}
+					<div id="about">
+						{block:IfShowWidgetHeaders}<h3>{lang:About me}</h3>{/block:IfShowWidgetHeaders}
+						<p><img alt="Portrait" src="{PortraitURL-64}" />{Description}</p>
+						<p class="copyright">Copyright &copy; {Title} {CopyrightYears}.</p>
+					</div>
+				{/block:Description}
+            {/block:IfDescriptionWidget}
+        </div>
+		
+    </div>
+    
+	{block:SearchPage}
+		<div class="card">
+			<div class="text">
+				<h2>{lang:Search}: "{SearchQuery}" ({SearchResultCount})</h2>
+				{block:NoSearchResults}
+					<p>{lang:No results found}</p>
+				{/block:NoSearchResults}
+			</div>
+			<div class="tags"></div>
+			<div class="meta"></div>
+		</div>
+	{/block:SearchPage}
+
+	{block:TagPage}
+		<div class="card">
+			<div class="text">
+				<h2>{lang:Tagged} "{Tag}":</h2>
+			</div>
+			<div class="tags"></div>
+			<div class="meta"></div>
+		</div>
+	{/block:TagPage}
+
+	{block:DayPage}
+		<div class="card">
+			<div class="text">
+				<h2>{Month} {DayOfMonth}, {Year}</h2>
+			</div>
+			<div class="tags"></div>
+			<div class="meta">
+				{block:PreviousDayPage}
+					<div class="left"><a href="{PreviousDayPage}" title="{lang:Previous}">{lang:Previous}</a></div>
+				{/block:PreviousDayPage}
+				{block:NextDayPage}
+					<div class="right"><a href="{NextDayPage}" title="{lang:Next}">{lang:Next}</a></div>
+				{/block:NextDayPage}
+			</div>
+		</div>
+	{/block:DayPage}
+	
+    <div id="content" class="autopagerize_page_element">
+		
+		{block:IfLeftSidebar}
+			{block:PostNotes}
+				<div class="card" id="notes">
+					<h2>{lang:Notes}:</h2>
+					{PostNotes-16}
+				</div>
+			{/block:PostNotes}
+		{/block:IfLeftSidebar}
+		
+        {block:Posts}
+            <div class="card">
+                {block:Text}
+                    <div class="text">    
+                        {block:Title}
+                            <h3>{Title}</h3>
+                        {/block:Title}
+                        {Body}
+                    </div>
+                {/block:Text}
+
+                {block:Photo}
+                    <a href="{PhotoURL-HighRes}" title="{lang:High-res}" target="_blank">
+                        {block:IfMediaWidth250}<img src="{PhotoURL-250}" alt="{PhotoAlt}" />{/block:IfMediaWidth250}
+                        {block:IfMediaWidth400}<img src="{PhotoURL-400}" alt="{PhotoAlt}" />{/block:IfMediaWidth400}
+                        {block:IfMediaWidth500}<img src="{PhotoURL-500}" alt="{PhotoAlt}" />{/block:IfMediaWidth500}
+                        {block:IfMediaWidth700}<img src="{PhotoURL-700}" alt="{PhotoAlt}" />{/block:IfMediaWidth700}
+                    </a>
+                    {block:Caption}
+                        <div class="text">{Caption}</div>
+                    {/block:Caption}
+                {/block:Photo}
+
+                {block:Panorama}
+                    {LinkOpenTag}
+                        <img src="{PhotoURL-Panorama}" alt="{PhotoAlt}" />
+                    {LinkCloseTag}
+                    {block:Caption}
+                        <div class="text">{Caption}</div>
+                    {/block:Caption}
+                {/block:Panorama}
+
+                {block:Photoset}
+                    {block:IfMediaWidth250}{Photoset-250}{/block:IfMediaWidth250}
+                    {block:IfMediaWidth400}{Photoset-400}{/block:IfMediaWidth400}
+                    {block:IfMediaWidth500}{Photoset-500}{/block:IfMediaWidth500}
+                    {block:IfMediaWidth700}{Photoset-700}{/block:IfMediaWidth700}
+                    {block:Caption}
+                        <div class="text">{Caption}</div>
+                    {/block:Caption}
+                {/block:Photoset}
+
+                {block:Quote}
+                    <div class="text quote">
+                        <h3>"{Quote}"</h3>
+                        {block:Source}
+                            <p class="source">- {Source}</p>
+                        {/block:Source}
+                    </div>
+                {/block:Quote}
+
+                {block:Link}
+                    <div class="text link">
+                        <h3><a href="{URL}" title="{Name}" {Target}>{Name}</a> <span class="small">({Host})</span></h3>
+                        {block:Description}
+                            {Description}
+                        {/block:Description}
+                    </div>
+                {/block:Link}
+
+                {block:Chat}
+                    <div class="text">
+                        {block:Title}
+                            <h3>{Title}</h3>
+                        {/block:Title}
+                        <ul class="chat">
+                            {block:Lines}
+                                <li class="{Alt}">
+                                    {block:Label}
+                                        <span class="label">{Label}</span>
+                                    {/block:Label}{Line}
+                                </li>
+                            {/block:Lines}
+                        </ul>
+                    </div>
+                {/block:Chat}
+
+                {block:Video}
+                    <div class="video">
+                        {block:IfMediaWidth250}{Video-250}{/block:IfMediaWidth250}
+                        {block:IfMediaWidth400}{Video-400}{/block:IfMediaWidth400}
+                        {block:IfMediaWidth500}{Video-500}{/block:IfMediaWidth500}
+                        {block:IfMediaWidth700}{Video-700}{/block:IfMediaWidth700}
+                    </div>
+                    {block:Caption}
+                        <div class="text">{Caption}</div>
+                    {/block:Caption}
+                {/block:Video}
+
+                {block:Audio}
+                    <div class="audio">
+                        {AudioPlayerWhite}
+                    </div>
+                    {block:Caption}
+                        <div class="text">{Caption}</div>
+                    {/block:Caption}
+                {/block:Audio}
+
+                {block:Answer}
+                    <div class="text">
+                        <table>
+                            <tr>
+                                <td><img src="{AskerPortraitURL-30}" class="avatar" alt="{Asker}" /></td>
+                                <td><b>{Asker}:</b></td>
+                            </tr>
+                            <tr><td></td><td>{Question}</td></tr>
+							{block:Answerer}
+								<tr>
+									<td><img src="{AnswererPortraitURL-30}" class="avatar" alt="{Answerer}" /></td>
+									<td><b>{Answerer}</b></td>
+								</tr>
+							{/block:Answerer}
+                            <tr><td></td><td>{Answer}</td></tr>
+                        </table>
+
+                        <p></p>
+                    </div>
+                {/block:Answer}
+
+                {block:PostNotes}
+                    <div class="text">{Replies}</div>
+                {/block:PostNotes}
+
+                <div class="tags">
+                    {block:Tags}
+                        <a href="{TagURL}" {Target} title="{Tag}">#{Tag}</a>
+                    {/block:Tags}
+                </div>
+
+                <div class="meta">
+                    <div class="left">
+                        {LikeButton size="15" color="black"} {ReblogButton size="16" color="black"}{block:NoteCount} {NoteCountWithLabel}{/block:NoteCount}
+                    </div>
+                    <p class="right"><a title="Permalink" {Target} href="{Permalink}">{TimeAgo}</a></p>
+                </div>
+                <script type="text/javascript">if ("{PostID}"=="") { document.getElementsByClassName("meta")[1].innerHTML=""; document.getElementsByClassName("card")[1].style.width="70%"; }</script>
+            </div>
+        {/block:Posts}
+    
+		{block:IfNotLeftSidebar}
+			{block:PostNotes}
+				<div class="card" id="notes">
+					<h2>{lang:Notes}:</h2>
+					{PostNotes-16}
+				</div>
+			{/block:PostNotes}
+		{/block:IfNotLeftSidebar}
+        
+    </div>
+        
+    {block:IfNotInfiniteScrolling}
+        {block:Pagination}
+            <div id="nav">
+                {block:PreviousPage}
+                    <a href="{PreviousPage}" title="{lang:Previous page}" class="left">{lang:Previous}</a>
+                {/block:PreviousPage}
+
+                {block:JumpPagination length="5"}{block:CurrentPage}
+                    <a>{PageNumber}</a>
+                {/block:CurrentPage}{block:JumpPage}
+                    <a href="{URL}" title="{PageNumber}">{PageNumber}</a>
+                {/block:JumpPage}{/block:JumpPagination}
+
+                {block:NextPage}
+                     <a href="{NextPage}" title="{lang:Next page}" class="right">{lang:Next}</a>
+                {/block:NextPage}
+            </div>
+        {/block:Pagination}
+    {/block:IfNotInfiniteScrolling}
+    
+    <p id="copyright">Copyright &copy; {Title} {CopyrightYears}.</p>
+	
+	<div id="arrow"><a href="#top">&#10152;</a></div>
+    
+    <script src="imagesloaded.pkgd.min.js" type="text/javascript"></script>
+    <script src="masonry.pkgd.min.js" type="text/javascript"></script>
+	{block:Twitter}
+	    <script type="text/javascript" src="/tweets.js"></script>
+	{/block:Twitter}
+	
+    {block:IfInfiniteScrolling}{block:IndexPage}<script src="infinitescrolling.min.js" type="text/javascript"></script>{/block:IndexPage}{/block:IfInfiniteScrolling}
+    <script type="text/javascript">
+        var container = document.querySelector('#content');
+        var msnry = new Masonry( container, {
+          columnWidth: 0,
+          itemSelector: '.card'
+        });
+        imagesLoaded( container, function() {
+            msnry.layout();
+        });
+    </script>
+    
+</body>
+</html>
