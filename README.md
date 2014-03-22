@@ -17,4 +17,4 @@ There is a small selection of widgets that can be enabled: a search bar, likes w
 * Even menu items will be displayed in the left-hand side of the menu card, whilst odd menu items will be displayed in the right-hand side. The ask and submit links have their own place at the bottom of the menu card.
 
 >TODO:
-- wait for localization (top, query, submit, ask)
+- wait for localization (top, query, submit, ask, answerer)
