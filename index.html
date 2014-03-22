@@ -11,7 +11,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="{Favicon}" />
 	<link rel="apple-touch-icon" href="{PortraitURL-128}" />
     <link rel="alternate" type="application/rss+xml" href="{RSS}" />
-	<link rel="stylesheet" type="text/css" href="http://static.tumblr.com/42ntkdn/9cnn1x93n/shiro.min.css" />
+	<link rel="stylesheet" type="text/css" href="http://static.tumblr.com/42ntkdn/Ty6n2u88y/shiro.min.css" />
     
 	{block:Description}
         <meta name="description" content="{MetaDescription}" />
@@ -23,6 +23,8 @@
     <meta name="color:Bar" content="#efefef" />
     <meta name="color:Text" content="#222" />
     <meta name="color:Tags" content="#777" />
+	
+	<meta name="font:Font" content="Helvetica Neue"/>
     
     <meta name="text:Width" content="300" />
     <meta name="image:Background Image" content="" />
@@ -30,13 +32,13 @@
     <meta name="if:Background Repeat" content="1" />
     <meta name="if:Fixed Background" content="0" />
     <meta name="if:Left Sidebar" content="0" />
+    <meta name="if:Hide Sidebar" content="0" />
     
     <meta name="if:Show Menu Card" content="1" />
     <meta name="if:Description Widget" content="1" />
     <meta name="if:Search Widget" content="1" />
     <meta name="if:Following Widget" content="0" />
     <meta name="if:Likes Widget" content="0" />
-    <meta name="if:Following Widget" content="0" />
     <meta name="if:Twitter Widget" content="0" />
     <meta name="if:Show Widget Headers" content="1" />
     <meta name="if:Hide Widgets On Mobile" content="1" />
@@ -62,6 +64,7 @@
 			{block:IfFixedBackground}
                 background-attachment: fixed;
             {/block:IfFixedBackground}
+			font-family: {font:Font};
         }
 		{block:IfLeftSidebar}
 			#bar { left: 0; }
@@ -69,6 +72,7 @@
 				text-align: left;
 				left: 20px;
 			}
+			#widgets > div { float: left; }			
 			body { text-align: right; }
 			body > .card {
 				display: inline-block;
@@ -83,11 +87,20 @@
 				text-align: right;
 				right: 20px;
 			}
+			#widgets > div { float: right; }
 			body > .card {
 				margin: 70px 0 -20px 70px;
 			}
 			#arrow { left: 0; }
 		{/block:IfNotLeftSidebar}
+		{block:IfHideSidebar}
+			#bar { display: none; }
+			#content {
+				width: 100%;
+				padding: 50px;
+			}
+		{/block:IfHideSidebar}
+		#following img { border: 1px solid {color:Border}; }
 		#arrow a { color: {color:Tags}; }
         a, a:link, a:visited, a:hover {color: {color:Text};}
         .card, #widgets > div, #header {

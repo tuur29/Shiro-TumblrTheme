@@ -82,7 +82,7 @@ img, iframe {
 #widgets > div {
     margin-top: 20px;
     padding: 5px 25px;
-    display: inline-block;
+    clear: both;
 }
 
 #search {
@@ -102,7 +102,10 @@ img, iframe {
 #tweets a { text-decoration: none; }
 #tweets a:hover { text-decoration: underline; }
 
-#follow img { padding: 3px; }
+#following img {
+	margin: 3px;
+	padding: 3px;
+}
 
 #about img{
     float: left;
@@ -238,7 +241,7 @@ iframe.like_toggle { width: 15px; }
         position: static;
         display: block;
     }
-    #about { text-align: left; }
+	#widgets > div { float: none; text-align: left; }
     #about img { float: left; }
     #content, #nav {
         width: 100%;
